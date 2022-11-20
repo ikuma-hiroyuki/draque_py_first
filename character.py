@@ -4,21 +4,12 @@ import ascii_art
 
 
 class Character:
-    """
-    """
+    """登場人物のHPと攻撃力を設定する"""
 
-    def __init__(self, is_enemy, aa=""):
-        """
-        登場人物のHPと攻撃力を設定する
-
-        敵キャラクターだった場合は敵の名前を表示する
-        """
+    def __init__(self):
         self.hit_point = None
         self.offensive_power = None
         self.special_attack_name = None
-        if is_enemy:
-            print(aa)
-            print(self.__class__.__name__, "があらわれた\n")
 
     def __str__(self):
         """ 登場人物の名前を返す """
@@ -50,8 +41,10 @@ class Character:
 
 
 class Player(Character):
+    """プレイヤークラス"""
+
     def __init__(self):
-        super(Player, self).__init__(False)
+        super(Player, self).__init__()
         self.hit_point = 50
         self.offensive_power = 3
         self.special_attack_name = "会心の一撃！"
@@ -63,19 +56,33 @@ class Player(Character):
         print(f"【バイキルト】 攻撃力が{by}倍になった！")
 
 
-class Slime(Character):
+class Enemy(Character):
+    """
+    敵クラス
+
+    コンストラクタでaaを表示する
+    """
+
+    def __init__(self, aa):
+        super(Enemy, self).__init__()
+        self.hit_point = None
+        self.offensive_power = None
+        self.special_attack_name = None
+        print(aa)
+        print(self.__class__.__name__, "があらわれた\n")
+
+
+class Slime(Enemy):
     def __init__(self):
-        self.aa = ascii_art.slime
-        super(Slime, self).__init__(True, self.aa)
+        super(Slime, self).__init__(ascii_art.slime)
         self.hit_point = 10
         self.offensive_power = 1
         self.special_attack_name = "溶解液"
 
 
-class Dragon(Character):
+class Dragon(Enemy):
     def __init__(self):
-        self.aa = ascii_art.dragon
-        super(Dragon, self).__init__(True, self.aa)
+        super(Dragon, self).__init__(ascii_art.dragon)
         self.hit_point = 100
         self.offensive_power = 20
         self.special_attack_name = "ほのお"
