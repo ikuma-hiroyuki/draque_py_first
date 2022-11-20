@@ -12,24 +12,16 @@ class Character:
         self.special_attack_name = None
 
     def __str__(self):
-        """ 登場人物の名前を返す """
+        """登場人物の名前を返す"""
         return self.__class__.__name__
 
     def _normal_attack(self):
-        """
-        通常攻撃
-
-        :return: offensive_power * 1~3
-        """
+        """通常攻撃"""
         print(self.__class__.__name__, "の攻撃")
         return int(self.offensive_power * (1 + random.random()))
 
     def _special_attack(self):
-        """
-        特殊攻撃
-
-        :return:offensive_power * 3~6
-        """
+        """特殊攻撃"""
         print(self.__class__.__name__, "の特殊攻撃！\n", f"【{self.special_attack_name}】")
         return int(self.offensive_power * (random.randint(2, 3) + random.random()))
 
@@ -65,9 +57,6 @@ class Enemy(Character):
 
     def __init__(self, aa):
         super(Enemy, self).__init__()
-        self.hit_point = None
-        self.offensive_power = None
-        self.special_attack_name = None
         print(aa)
         print(self.__class__.__name__, "があらわれた\n")
 
