@@ -40,7 +40,6 @@ if __name__ == "__main__":
             player.by_kill_to()
         else:
             player_attack = player.attack()
-            # enemy - player_attack
             enemy.hit_point -= player_attack
             print(enemy, "に", player_attack, "ポイントのダメージを与えた！\n")
 
