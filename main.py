@@ -4,22 +4,30 @@ import shutil
 import ascii_art
 import character
 
-terminal_size = shutil.get_terminal_size()
 command_dict = {"0": "たたかう", "1": "バイキルト", "2": "にげる"}
-enemy_list = [character.Slime, character.Dragon]
-
 cmd_string = ""
 for k, v in command_dict.items():
     cmd_string += f"{k} : {v}\n"
+enemy_list = [character.Slime, character.Dragon]
+terminal_size = shutil.get_terminal_size()
 
 
+def print_hitpoint(func):
+    def print_hitpoint_():
+        print("-" * terminal_size.columns)
+        print(f"残HP\n{player}\t-> {player.hit_point}\n{enemy}\t-> {enemy.hit_point}\n")
+        return func()
+
+    return print_hitpoint_
+
+
+@print_hitpoint
 def get_battle_command():
-    print("-" * terminal_size.columns)
-    print(f"残HP\n{player}\t-> {player.hit_point}\n{enemy}\t-> {enemy.hit_point}\n")
     cmd = ""
     while cmd not in command_dict:
         cmd = input(f"コマンド番号を入力してください\n{cmd_string}\n")
-    print()
+        if cmd not in command_dict:
+            print("無効なコマンドです。再度入力してください。\n")
     return command_dict[cmd]
 
 
