@@ -1,27 +1,30 @@
-import shutil
 import random
+import shutil
 
-import aa
+import ascii_art
 import character
 
-command_list = ["たたかう", "にげる"]
 terminal_size = shutil.get_terminal_size()
-
+command_dict = {"0": "たたかう", "1": "バイキルト", "2": "にげる"}
 enemy_list = [character.Slime, character.Dragon]
+
+cmd_string = ""
+for k, v in command_dict.items():
+    cmd_string += f"{k} : {v}\n"
 
 
 def get_battle_command():
     print("-" * terminal_size.columns)
     print(f"残HP\n{player}\t-> {player.hit_point}\n{enemy}\t-> {enemy.hit_point}\n")
     cmd = ""
-    while cmd == "":
-        cmd = input(f"コマンドを入力してください\n0: {command_list[0]}\n1: {command_list[1]}\n")
+    while cmd not in command_dict:
+        cmd = input(f"コマンド番号を入力してください\n{cmd_string}\n")
     print()
-    return int(cmd)
+    return command_dict[cmd]
 
 
 if __name__ == "__main__":
-    print(aa.title, "\n"*2)
+    print(ascii_art.title, "\n" * 2)
     player = character.Player()
     enemy = random.choice(enemy_list)()
 
@@ -29,25 +32,28 @@ if __name__ == "__main__":
         command = get_battle_command()
 
         # プレイヤーのターン
-        if command == 1:
-            print(aa.runaway)
-            print(player, "はにげだした")
+        if command == "にげる":
+            print(ascii_art.runaway)
+            print(player, "は逃げ出した")
             exit()
-
-        player_attack = player.attack()
-        enemy - player_attack
-        print(enemy, "に", player_attack, "ポイントのダメージをあたえた！\n")
+        elif command == "バイキルト":
+            player.by_kill_to()
+        else:
+            player_attack = player.attack()
+            # enemy - player_attack
+            enemy.hit_point -= player_attack
+            print(enemy, "に", player_attack, "ポイントのダメージを与えた！\n")
 
         # 敵のターン
         if enemy.hit_point > 0:
             enemy_attack = enemy.attack()
-            player - enemy_attack
+            player.hit_point -= enemy_attack
             print(enemy_attack, "のポイントのダメージをうけた！\n")
 
             if player.hit_point <= 0:
-                print(aa.die)
-                print(player, "はしんでしまった！")
+                print(ascii_art.die)
+                print(player, "は死んでしまった！")
                 exit()
 
-    print(aa.win)
-    print(enemy, "をたおした")
+    print(ascii_art.win)
+    print(enemy, "を倒した！")
