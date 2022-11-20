@@ -4,7 +4,7 @@ import ascii_art
 
 
 class Character:
-    """登場人物のHPと攻撃力を設定する"""
+    """登場人物の基底クラス"""
 
     def __init__(self):
         self.hit_point = None
