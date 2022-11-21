@@ -42,25 +42,25 @@ if __name__ == "__main__":
         # プレイヤーのターン
         if command == "にげる":
             print(ascii_art.runaway)
-            print(player, "は逃げ出した")
+            print(f"{player} はにげだした")
             exit()
         elif command == "バイキルト":
             player.by_kill_to()
         else:
             player_attack = player.attack()
             enemy.hit_point -= player_attack
-            print(enemy, "に", player_attack, "ポイントのダメージを与えた！\n")
+            print(f"{enemy} に {player_attack} ポイントのダメージをあたえた\n")
 
         # 敵のターン
         if enemy.hit_point > 0:
             enemy_attack = enemy.attack()
             player.hit_point -= enemy_attack
-            print(enemy_attack, "のポイントのダメージをうけた！\n")
+            print(f"{enemy_attack} のポイントのダメージをうけた！\n")
 
             if player.hit_point <= 0:
                 print(ascii_art.die)
-                print(player, "は死んでしまった！")
+                print(f"{player} はしんでしまった……")
                 exit()
 
     print(ascii_art.win)
-    print(enemy, "を倒した！")
+    print(f"{enemy} をたおした！")
