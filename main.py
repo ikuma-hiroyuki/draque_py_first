@@ -2,13 +2,13 @@ import random
 import shutil
 
 import ascii_art
-import character
+import characters
 
 command_dict = {"0": "たたかう", "1": "バイキルト", "2": "にげる"}
 cmd_string = ""
 for k, v in command_dict.items():
     cmd_string += f"{k} : {v}\n"
-enemy_list = [character.Slime, character.Dragon]
+enemy_list = [characters.Slime, characters.Dragon]
 terminal_size = shutil.get_terminal_size()
 
 
@@ -33,7 +33,7 @@ def get_battle_command():
 
 if __name__ == "__main__":
     print(ascii_art.title, "\n" * 2)
-    player = character.Player()
+    player = characters.Player()
     enemy = random.choice(enemy_list)()
 
     while enemy.hit_point > 0:
