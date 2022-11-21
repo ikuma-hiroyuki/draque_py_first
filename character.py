@@ -22,7 +22,7 @@ class Character:
 
     def _special_attack(self):
         """特殊攻撃"""
-        print(self.__class__.__name__, "の特殊攻撃！\n", f"【{self.special_attack_name}】")
+        print(self.__class__.__name__, "の特殊攻撃\n", f"【{self.special_attack_name}】")
         return int(self.offensive_power * (random.randint(2, 3) + random.random()))
 
     def attack(self):
@@ -36,7 +36,7 @@ class Player(Character):
     """プレイヤークラス"""
 
     def __init__(self):
-        super(Player, self).__init__()
+        super().__init__()
         self.hit_point = 50
         self.offensive_power = 3
         self.special_attack_name = "会心の一撃！"
@@ -56,14 +56,14 @@ class Enemy(Character):
     """
 
     def __init__(self, aa):
-        super(Enemy, self).__init__()
+        super().__init__()
         print(aa)
         print(self.__class__.__name__, "があらわれた\n")
 
 
 class Slime(Enemy):
     def __init__(self):
-        super(Slime, self).__init__(ascii_art.slime)
+        super().__init__(ascii_art.slime)
         self.hit_point = 10
         self.offensive_power = 1
         self.special_attack_name = "溶解液"
@@ -71,7 +71,7 @@ class Slime(Enemy):
 
 class Dragon(Enemy):
     def __init__(self):
-        super(Dragon, self).__init__(ascii_art.dragon)
+        super().__init__(ascii_art.dragon)
         self.hit_point = 100
         self.offensive_power = 20
         self.special_attack_name = "ほのお"
