@@ -41,8 +41,7 @@ if __name__ == "__main__":
 
         # プレイヤーのターン
         if command == "にげる":
-            print(ascii_art.runaway)
-            print(f"{player} はにげだした")
+            player.runaway()
             exit()
         elif command == "バイキルト":
             player.by_kill_to()
