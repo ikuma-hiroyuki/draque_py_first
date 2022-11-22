@@ -51,6 +51,10 @@ class Player(Character):
         self.offensive_power *= by
         print(f"【バイキルト】 攻撃力が{by}倍になった！")
 
+    def runaway(self):
+        print(ascii_art.runaway)
+        print(f"{self} はにげだした")
+
 
 class Enemy(Character):
     """
