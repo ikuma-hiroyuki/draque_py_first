@@ -32,7 +32,7 @@ def get_battle_command():
 
 
 if __name__ == "__main__":
-    print(ascii_art.title, "\n" * 2)
+    print(f"{ascii_art.title}\n")
     player = characters.Player()
     enemy = random.choice(enemy_list)()
 
