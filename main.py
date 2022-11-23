@@ -1,24 +1,24 @@
 import random
 import shutil
+from pathlib import Path
 
-import ascii_art
-import characters
+from config import ACTION_ART_DIR
+from characters import Slime, Dragon, Player
 
 command_dict = {"0": "たたかう", "1": "バイキルト", "2": "にげる"}
 cmd_string = ""
 for k, v in command_dict.items():
     cmd_string += f"{k} : {v}\n"
-enemy_list = [characters.Slime, characters.Dragon]
 terminal_size = shutil.get_terminal_size()
 
 
 def print_hitpoint(func):
-    def print_hitpoint_():
+    def _print_hitpoint():
         print("-" * terminal_size.columns)
         print(f"残HP\n{player}\t-> {player.hit_point}\n{enemy}\t-> {enemy.hit_point}\n")
         return func()
 
-    return print_hitpoint_
+    return _print_hitpoint
 
 
 @print_hitpoint
@@ -31,9 +31,19 @@ def get_battle_command():
     return command_dict[cmd]
 
 
+def get_ascii_art(file_name):
+    with Path.open(ACTION_ART_DIR / file_name, "r", encoding="utf-8") as f:
+        return f.read()
+
+
 if __name__ == "__main__":
-    print(f"{ascii_art.title}\n")
-    player = characters.Player()
+    enemy_list = [Slime, Dragon]
+
+    print(f"{get_ascii_art('title.txt')}\n")
+
+    # todo 冒険の書
+
+    player = Player()
     enemy = random.choice(enemy_list)()
 
     while enemy.hit_point > 0:
@@ -50,6 +60,8 @@ if __name__ == "__main__":
             enemy.hit_point -= player_attack
             print(f"{enemy} に {player_attack} ポイントのダメージをあたえた\n")
 
+        # todo 一時停止 -> コマンド入力で再開
+
         # 敵のターン
         if enemy.hit_point > 0:
             enemy_attack = enemy.attack()
@@ -57,9 +69,11 @@ if __name__ == "__main__":
             print(f"{enemy_attack} のポイントのダメージをうけた！\n")
 
             if player.hit_point <= 0:
-                print(ascii_art.die)
+                print(get_ascii_art("die.txt"))
                 print(f"{player} はしんでしまった……")
                 exit()
 
-    print(ascii_art.win)
+        # todo 一時停止 -> コマンド入力で再開
+
+    print(get_ascii_art("win.txt"))
     print(f"{enemy} をたおした！")
