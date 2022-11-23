@@ -20,7 +20,7 @@ class Character:
 
     def normal_attack(self):
         """通常攻撃"""
-        print(f"{self.__class__.__name__} の攻撃")
+        print(f"{self.char_name} の攻撃")
         return int(self.offensive_power * (1 + random.random()))
 
     def special_attack(self):
@@ -29,7 +29,7 @@ class Character:
 
         通常攻撃より強い
         """
-        print(f"{self.__class__.__name__} の特殊攻撃\n【{self.special_attack_name}】")
+        print(f"{self.char_name} の特殊攻撃\n【{self.special_attack_name}】")
         return int(self.offensive_power * (random.randint(2, 3) + random.random()))
 
     def attack(self):
@@ -49,8 +49,8 @@ class Player(Character):
         print(f"【バイキルト】 攻撃力が{by}倍になった！")
 
     def runaway(self):
-        print(self.get_ascii_art("runaway.txt"))
-        print(f"{self} はにげだした")
+        print(self.get_ascii_art("runaway.txt"))  # todo bug
+        print(f"{self.char_name} はにげだした")
 
 
 class Enemy(Character):

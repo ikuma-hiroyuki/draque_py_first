@@ -15,7 +15,7 @@ terminal_size = shutil.get_terminal_size()
 def print_hitpoint(func):
     def _print_hitpoint():
         print("-" * terminal_size.columns)
-        print(f"残HP\n{player}\t-> {player.hit_point}\n{enemy}\t-> {enemy.hit_point}\n")
+        print(f"残HP\n{player.char_name}\t-> {player.hit_point}\n{enemy.char_name}\t-> {enemy.hit_point}\n")
         return func()
 
     return _print_hitpoint
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         else:
             player_attack = player.attack()
             enemy.hit_point -= player_attack
-            print(f"{enemy} に {player_attack} ポイントのダメージをあたえた\n")
+            print(f"{enemy.char_name} に {player_attack} ポイントのダメージをあたえた\n")
 
         # todo 一時停止 -> コマンド入力で再開
 
@@ -70,10 +70,10 @@ if __name__ == "__main__":
 
             if player.hit_point <= 0:
                 print(get_ascii_art("die.txt"))
-                print(f"{player} はしんでしまった……")
+                print(f"{player.char_name} はしんでしまった……")
                 exit()
 
         # todo 一時停止 -> コマンド入力で再開
 
     print(get_ascii_art("win.txt"))
-    print(f"{enemy} をたおした！")
+    print(f"{enemy.char_name} をたおした！")
