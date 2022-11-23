@@ -1,26 +1,29 @@
 import random
+from pathlib import Path
 
-import ascii_art
+from config import CHAR_ART_DIR
 
 
 class Character:
     """登場人物の基底クラス"""
+    char_name = ""
 
-    def __init__(self):
-        self.hit_point = None
-        self.offensive_power = None
-        self.special_attack_name = None
+    def __init__(self, char_name, hit_point, offensive_power, special_attack_name):
+        self.char_name = char_name
+        self.hit_point = hit_point
+        self.offensive_power = offensive_power
+        self.special_attack_name = special_attack_name
 
-    def __str__(self):
-        """登場人物の名前を返す"""
-        return self.__class__.__name__
+    def get_ascii_art(self, file_name):
+        with Path.open(CHAR_ART_DIR / file_name, "r", encoding="utf-8") as f:
+            return f.read()
 
-    def _normal_attack(self):
+    def normal_attack(self):
         """通常攻撃"""
         print(f"{self.__class__.__name__} の攻撃")
         return int(self.offensive_power * (1 + random.random()))
 
-    def _special_attack(self):
+    def special_attack(self):
         """
         特殊攻撃
 
@@ -30,20 +33,14 @@ class Character:
         return int(self.offensive_power * (random.randint(2, 3) + random.random()))
 
     def attack(self):
-        if random.random() < 0.3:
-            return self._special_attack()
-        else:
-            return self._normal_attack()
+        return self.special_attack() if random.random() < 0.3 else self.normal_attack()
 
 
 class Player(Character):
     """プレイヤークラス"""
 
-    def __init__(self):
-        super().__init__()
-        self.hit_point = 50
-        self.offensive_power = 3
-        self.special_attack_name = "会心の一撃！"
+    def __init__(self, char_name='ゆうしゃ', hit_point=50, offensive_power=3, ):
+        super().__init__(char_name, hit_point, offensive_power, '会心の一撃！')
 
     def by_kill_to(self):
         """攻撃力が2~10倍になる"""
@@ -52,34 +49,34 @@ class Player(Character):
         print(f"【バイキルト】 攻撃力が{by}倍になった！")
 
     def runaway(self):
-        print(ascii_art.runaway)
+        print(self.get_ascii_art("runaway.txt"))
         print(f"{self} はにげだした")
 
 
 class Enemy(Character):
-    """
-    敵クラス
+    """ 敵クラス """
+    char_art = ''
 
-    コンストラクタでaaを表示する
-    """
+    def get_char_art(self):
+        if self.char_art == '':
+            raise NotImplementedError('char_art が未実装です')
+        return super().get_ascii_art(self.char_art)
 
-    def __init__(self, aa):
-        super().__init__()
-        print(aa)
-        print(f"{self.__class__.__name__} があらわれた\n")
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print(self.get_char_art())
+        print(f"{self.char_name} があらわれた\n")
 
 
 class Slime(Enemy):
+    char_art = "slime.txt"
+
     def __init__(self):
-        super().__init__(ascii_art.slime)
-        self.hit_point = 10
-        self.offensive_power = 1
-        self.special_attack_name = "溶解液"
+        super().__init__('スライム', 10, 1, "溶解液")
 
 
 class Dragon(Enemy):
+    char_art = "dragon.txt"
+
     def __init__(self):
-        super().__init__(ascii_art.dragon)
-        self.hit_point = 100
-        self.offensive_power = 20
-        self.special_attack_name = "ほのお"
+        super().__init__('ドラゴン', 100, 20, 'ほのお')
