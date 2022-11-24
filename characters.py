@@ -1,7 +1,7 @@
 import random
 from pathlib import Path
 
-from config import CHAR_ART_DIR
+from config import CHAR_ART_DIR, ACTION_ART_DIR
 
 
 class Character:
@@ -14,8 +14,8 @@ class Character:
         self.offensive_power = offensive_power
         self.special_attack_name = special_attack_name
 
-    def get_ascii_art(self, file_name):
-        with Path.open(CHAR_ART_DIR / file_name, "r", encoding="utf-8") as f:
+    def get_ascii_art(self, file_name, art_dir=CHAR_ART_DIR):
+        with Path.open(art_dir / file_name, "r", encoding="utf-8") as f:
             return f.read()
 
     def normal_attack(self):
@@ -49,7 +49,7 @@ class Player(Character):
         print(f"【バイキルト】 攻撃力が{by}倍になった！")
 
     def runaway(self):
-        print(self.get_ascii_art("runaway.txt"))  # todo bug
+        print(self.get_ascii_art("runaway.txt", art_dir=ACTION_ART_DIR))
         print(f"{self.char_name} はにげだした")
 
 
