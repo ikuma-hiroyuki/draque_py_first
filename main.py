@@ -13,17 +13,17 @@ terminal_size = shutil.get_terminal_size()
 pause_message = '【何かキーを押してください】\n'
 
 
-def print_hitpoint(func):
-    def _print_hitpoint():
+def print_hit_point(func):
+    def _print_hit_point():
         print("-" * terminal_size.columns)
         print(f"残HP\n{player.char_name} -> {player.hit_point}\n{enemy.char_name} -> {enemy.hit_point}\n")
         print(enemy.get_char_art())
         return func()
 
-    return _print_hitpoint
+    return _print_hit_point
 
 
-@print_hitpoint
+@print_hit_point
 def get_battle_command():
     cmd = ""
     while cmd not in command_dict:
